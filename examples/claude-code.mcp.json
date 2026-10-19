@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "notebooklm": {
+      "type": "stdio",
+      "command": "uv",
+      "args": ["run", "--frozen", "--no-editable", "--directory", "/absolute/path/to/checkout", "notebooklm-readonly-mcp"]
+    }
+  }
+}
