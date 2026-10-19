@@ -1,6 +1,6 @@
 # Contributing
 
-Use Python 3.11+, clone the repo, then `uv sync --frozen --group dev`. Run pytest, ruff, and
+Use Python 3.11+, clone the repo, then `uv sync --frozen --no-editable --group dev --reinstall-package notebooklm-readonly-mcp`. Run pytest, ruff, and
 `python scripts/check_public.py` before submitting changes. Use synthetic fixtures only; never record
 real notebooks, account information, browser state or OAuth credentials in tests or Git history.
 

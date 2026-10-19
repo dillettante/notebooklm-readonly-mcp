@@ -98,6 +98,13 @@ async def test_unknown_source_rejected_before_retrieval(fake):
     fake.sources.get_fulltext.assert_not_called()
 
 
+async def test_malformed_source_rows_raise_instead_of_silent_partial_list(fake):
+    fake.sources.list.side_effect = ValueError("malformed upstream source row")
+    with pytest.raises(BackendError, match="UPSTREAM_ERROR"):
+        await backend(fake).call("list_sources", notebook="nb-one")
+    fake.sources.list.assert_awaited_once_with("nb-one", strict=True)
+
+
 @pytest.mark.parametrize("question", [" ", "x" * 20001])
 async def test_invalid_question_not_sent(fake, question):
     with pytest.raises(BackendError, match="INVALID_QUESTION"):

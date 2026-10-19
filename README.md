@@ -38,7 +38,7 @@ uv run --frozen --no-editable notebooklm auth check --test
 ```
 
 The upstream login command can open its own browser. Run it yourself and choose your account.
-For an existing browser session, consult `uv run notebooklm login --help`; cookie extraction may need
+For an existing browser session, consult `uv run --frozen --no-editable notebooklm login --help`; cookie extraction may need
 the upstream optional `rookie-cookies` package. Never send your cookie file to another person.
 
 Register this local server with your client; it starts on demand:
@@ -79,7 +79,7 @@ can expire. See [troubleshooting](docs/troubleshooting.md).
 ## Development
 
 ```sh
-uv sync --frozen --no-editable --group dev
+uv sync --frozen --no-editable --group dev --reinstall-package notebooklm-readonly-mcp
 uv run --frozen --no-editable pytest
 uv run --frozen --no-editable ruff check .
 uv run --frozen --no-editable python scripts/check_public.py

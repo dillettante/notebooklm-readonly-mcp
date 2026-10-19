@@ -18,6 +18,7 @@ def main():
         if args.transport == "stdio" and args.host != "127.0.0.1":
             raise ValueError("--host is only used with --transport streamable-http")
         settings = Settings.from_env()
+        server = create_server(settings, oauth=oauth, host=args.host, port=args.port)
     except (ValueError, OSError):
         parser.error(
             "Invalid local configuration. See docs/configuration.md; HTTP requires complete OAuth settings."
@@ -25,7 +26,6 @@ def main():
     # Upstream error logging can contain source text or auth response details.
     for logger_name in ("notebooklm", "httpx", "httpcore"):
         logging.getLogger(logger_name).setLevel(logging.CRITICAL + 1)
-    server = create_server(settings, oauth=oauth, host=args.host, port=args.port)
     server.run(transport=args.transport)
 
 

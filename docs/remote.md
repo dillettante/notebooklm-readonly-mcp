@@ -37,6 +37,19 @@ URLs. This project is not a multi-tenant hosted NotebookLM service.
 5. Obtain the immutable `sub` of your owner account from a verified token/provider console. Add that
    exact value to the server allowlist. Tenant membership alone never grants access.
 
+## Issuer URL exactness
+
+Use the identity provider's exact `iss` string. The MCP SDK normalizes an origin-only authorization
+server URL by adding a trailing slash in protected-resource metadata, while JWT verification compares
+the configured issuer exactly. Providers issuing origin-only `iss` without `/` may be incompatible
+with clients that require an exact metadata match. Prefer a canonical trailing-slash issuer at the
+provider, or a path-based issuer, and verify discovery before connecting a cloud client. The server
+does not silently rewrite the trusted JWT issuer.
+
+The transport rejects unexpected Origin headers. Server-to-server clients normally omit Origin;
+clients that send a different origin need a separately reviewed explicit origin policy. No wildcard
+origin policy is included.
+
 ## Run
 
 Set the following in your service manager's private environment (use `.env.example` as a variable

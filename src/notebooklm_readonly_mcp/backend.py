@@ -71,11 +71,11 @@ class Backend:
         notebook_id = await self._resolve(client, kwargs["notebook"])
         result: dict[str, Any] = {"notebook_id": notebook_id}
         if operation == "list_sources":
-            rows = await client.sources.list(notebook_id)
+            rows = await client.sources.list(notebook_id, strict=True)
             result["sources"] = [{"id": r.id, "title": r.title, "url": r.url} for r in rows]
         elif operation == "source_fulltext":
             source_id = kwargs["source_id"]
-            rows = await client.sources.list(notebook_id)
+            rows = await client.sources.list(notebook_id, strict=True)
             if source_id not in {r.id for r in rows}:
                 raise BackendError("SOURCE_NOT_FOUND: The source is not in the selected notebook.")
             source = await client.sources.get_fulltext(notebook_id, source_id)
